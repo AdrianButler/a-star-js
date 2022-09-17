@@ -10,52 +10,62 @@ let height = 50;
 
 let nodes = [];
 
-for (let i = 0; i < rows; i++)
+setUpGrid();
+
+const start = () =>
 {
-	if (!nodes[i])
-	{
-		nodes[i] = [];
-	}
-	for (let j = 0; j < cols; j++)
-	{
-		nodes[i][j] = new Node();
-	}
-}
 
+};
 
-for (let i = 0; i < nodes.length; i++)
+function setUpGrid()
 {
-	for (let j = 0; j < nodes[i].length; j++)
+	for (let i = 0; i < rows; i++)
 	{
-		const square = document.createElement("div");
-
-		switch (nodes[i][j].status)
+		if (!nodes[i])
 		{
-			case "filled":
-				square.backgroundColor = "blue";
-				break;
-			case "obstacle":
-				square.backgroundColor = "black";
-				break;
-			case "goal":
-				square.backgroundColor = "gold";
-				break;
+			nodes[i] = [];
 		}
-		square.style.position = "absolute";
-		square.style.width = `${width - 1}px`;
-		square.style.height = `${height - 1}px`;
-		square.style.left = `${i * width}px`;
-		square.style.top = `${j * height}px`;
-		square.style.border = "1px solid black"
+		for (let j = 0; j < cols; j++)
+		{
+			nodes[i][j] = new Node();
+			const square = document.createElement("div");
+			square.style.position = "absolute";
+			square.style.width = `${width - 1}px`;
+			square.style.height = `${height - 1}px`;
+			square.style.left = `${i * width}px`;
+			square.style.top = `${j * height}px`;
+			square.style.border = "1px solid black";
 
-		//todo add event listener
+			nodes[i][j].htmlElement = square;
 
-		nodes[i][j].htmlElement = square;
+			square.onclick = () =>
+			{
+				const status = nodes[i][j].status;
+				const nodeElement = nodes[i][j].htmlElement;
+				if (status === "empty")
+				{
+					nodes[i][j].status = "obstacle";
+					nodeElement.style.backgroundColor = "black";
+				}
+				else if (status === "obstacle")
+				{
+					nodes[i][j].status = "empty"
+					nodeElement.style.backgroundColor = "white";
+				}
+			};
 
-		console.log("here");
-		grid.appendChild(square);
+
+
+			grid.appendChild(square);
+		}
 	}
+	setGridSize();
 }
 
-grid.style.width = `${width * rows}px`;
-grid.style.height = `${height * cols}px`;
+function setGridSize()
+{
+	grid.style.width = `${width * rows}px`;
+	grid.style.height = `${height * cols}px`;
+}
+
+console.log(nodes);
