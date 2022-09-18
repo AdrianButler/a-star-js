@@ -12,5 +12,21 @@ export default class Node
 		this.htmlElement = undefined;
 	}
 
+	flip = () =>
+	{
+		if (this.status === "empty")
+		{
+			this.status = "obstacle";
+			this.htmlElement.style.backgroundColor = "black";
+		}
+		else if (this.status === "obstacle")
+		{
+			this.status = "empty";
+			this.htmlElement.style.backgroundColor = "white";
+		}
+
+	}
 }
+
+
 
