@@ -2,20 +2,24 @@ import Node from "./modules/node.js";
 
 const grid = document.getElementById("grid");
 
-let rows = 20;
-let cols = 20;
+let rows = 5;
+let cols = 5;
 
 let width = 50;
 let height = 50;
 
 let nodes = [];
 
+let startingNode;
+let goalNode;
+
 let currentSelectedType;
 setUpGrid();
 
 const start = () =>
 {
-
+	let openList = [];
+	let closedList = [];
 };
 
 function setUpGrid()
@@ -29,7 +33,7 @@ function setUpGrid()
 		}
 		for (let j = 0; j < cols; j++)
 		{
-			nodes[i][j] = new Node();
+			nodes[i][j] = new Node(i, j);
 			const square = document.createElement("div");
 			square.style.width = `${width}px`;
 			square.style.height = `${height}px`;
@@ -37,10 +41,26 @@ function setUpGrid()
 
 			nodes[i][j].htmlElement = square;
 
-			square.onmousedown = () =>
+			square.oncontextmenu = (event) => event.preventDefault();
+
+			square.onmousedown = (event) =>
 			{
-				currentSelectedType = nodes[i][j].status;
-				nodes[i][j].flip();
+				console.log(event.buttons);
+				if (event.buttons === 1)
+				{
+					currentSelectedType = nodes[i][j].status;
+					nodes[i][j].flip();
+				}
+				else if (event.buttons === 2)
+				{
+					nodes[i][j].setStart(startingNode);
+					startingNode = nodes[i][j];
+				}
+				else if (event.buttons === 4)
+				{
+					nodes[i][j].setGoal(goalNode);
+					goalNode = nodes[i][j];
+				}
 			};
 
 			square.onmouseover = (event) =>
@@ -51,10 +71,14 @@ function setUpGrid()
 				}
 			};
 
-
 			grid.appendChild(square);
 		}
 	}
+	nodes[0][0].setStart(startingNode) // replace old starting node with new one
+	startingNode = nodes[0][0];
+
+	nodes[rows - 1][cols - 1].setGoal(goalNode) // replace old goal node with new one
+	goalNode = nodes[rows - 1][cols - 1];
 	setGridSize();
 }
 
@@ -63,5 +87,3 @@ function setGridSize()
 	grid.style.width = `${width * rows + rows + 1}px`;
 	grid.style.height = `${height * cols + cols + 1}px`;
 }
-
-console.log(nodes);
