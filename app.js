@@ -2,7 +2,7 @@ import Node from "./modules/node.js";
 
 const grid = document.getElementById("grid");
 
-let rows = 15;
+let rows = 10;
 let cols = 10;
 
 let width = 50;
@@ -17,9 +17,45 @@ let path;
 let currentSelectedType;
 setUpGrid();
 
-console.log(nodes);
-const start = () => //TODO ALGORITHM DOES NOT WORK
+const startButton = document.getElementById("start");
+startButton.onclick = start;
+
+const rowsSlider = document.getElementById("rows");
+const colsSlider = document.getElementById("cols");
+const widthSlider = document.getElementById("width");
+const heightSlider = document.getElementById("height");
+
+rowsSlider.oninput = event =>
 {
+	rows = parseInt(event.target.value);
+	setUpGrid();
+};
+
+colsSlider.oninput = event =>
+{
+	cols = parseInt(event.target.value);
+	setUpGrid();
+}
+
+widthSlider.oninput = event =>
+{
+
+	width = parseInt(event.target.value);console.log(width);
+	setUpGrid();
+}
+
+heightSlider.oninput = event =>
+{
+	height = parseInt(event.target.value);
+	console.log(height);
+	setUpGrid();
+}
+
+
+function start(event)
+{
+	event.preventDefault();
+
 	let openList = [];
 	let closedList = [];
 
@@ -42,7 +78,6 @@ const start = () => //TODO ALGORITHM DOES NOT WORK
 				path.push(currentChildNode);
 				currentChildNode = currentChildNode.parent;
 			}
-			console.log(path);
 			break;
 		}
 
@@ -69,21 +104,21 @@ const start = () => //TODO ALGORITHM DOES NOT WORK
 
 	}
 
-	path.forEach((value) =>
+	path.forEach((value) => // todo animate and create speed setting
 	{
 		value.fill();
-	})
+	});
 
-};
-
-const startButton = document.createElement("button");
-startButton.onclick = start;
-startButton.innerText = "Start";
-
-document.getElementsByTagName("header")[0].appendChild(startButton);
+}
 
 function setUpGrid()
 {
+	nodes = [];
+	while (grid.firstChild)
+	{
+		grid.removeChild(grid.firstChild);
+	}
+
 
 	for (let i = 0; i < rows; i++)
 	{
@@ -131,6 +166,7 @@ function setUpGrid()
 			grid.appendChild(square);
 		}
 	}
+
 	nodes[0][0].setStart(startingNode); // replace old starting node with new one
 	startingNode = nodes[0][0];
 

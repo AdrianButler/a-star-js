@@ -18,18 +18,37 @@ header {
     padding-top: 10px;
     width: 100%;
     text-align: center;
-}
-
-main {
     display: flex;
     justify-content: center;
-    flex: 1 1 0;
-    align-items: center;
+    position: relative;
 }
 
 h1 {
     font-size: xx-large;
 }
+
+#settings {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background: black;
+    width: 300px;
+    position: absolute;
+    right: 1%;
+    color: white;
+
+}
+
+button {
+    margin-top: 10px;
+}
+
+main {
+     display: flex;
+     justify-content: center;
+     flex: 1 1 0;
+     align-items: center;
+ }
 
 #grid  {
     display: flex;

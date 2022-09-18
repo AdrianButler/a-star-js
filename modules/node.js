@@ -75,6 +75,10 @@ export default class Node
 				this.status = "empty";
 				this.htmlElement.style.backgroundColor = "white";
 				break;
+			case "filled": // todo fix bug with this
+				this.status = "empty";
+				this.htmlElement.style.backgroundColor = "white"
+				break;
 		}
 
 	};
