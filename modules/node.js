@@ -13,6 +13,34 @@ export default class Node
 		this.htmlElement = undefined;
 	}
 
+	calculateH = (endingNode) =>
+	{
+		if (this.hCost) // only calculate this if it hasn't been calculated yet
+		{
+			return;
+		}
+
+		const endX = endingNode.x;
+		const endY = endingNode.y;
+		const myX = this.x;
+		const myY = this.y;
+
+		const endXDistance = Math.pow(Math.abs(myX - endX), 2); // a^2
+		const endYDistance = Math.pow(Math.abs(myY - endY), 2); // b^2
+
+		this.hCost = Math.sqrt(endXDistance + endYDistance) * 10; // c^2
+	}
+
+	calculateF = () => // uses Pythagorean theorem to calculate distances (a^2 + b^2 = c^2)
+	{
+		this.fCost = this.gCost + this.hCost;
+	}
+
+	equals = (node) =>
+	{
+		return this.x === node.x && this.y === node.y;
+	}
+
 	setStart = (previousStart) =>
 	{
 		if (previousStart)
@@ -50,6 +78,21 @@ export default class Node
 		}
 
 	};
+
+	fill = () =>
+	{
+		if (this.status !== "start" && this.status !== "goal")
+		{
+			this.htmlElement.style.backgroundColor = "blue";
+			this.status = "filled";
+		}
+	}
+
+	empty = () =>
+	{
+		this.htmlElement.style.backgroundColor = "blue";
+		this.status = "filled";
+	}
 }
 
 
