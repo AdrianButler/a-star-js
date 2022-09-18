@@ -13,6 +13,21 @@
 <body>
 <header>
     <h1>A* Pathfinding</h1>
+    <form id="settings">
+        <label for="rows">Rows</label>
+        <input type="range" value="10" min="3" max="20" step="1" id="rows">
+
+        <label for="cols">Columns</label>
+        <input type="range" value="10" min="3" max="20" step="1" id="cols">
+
+        <label for="width">Width</label>
+        <input type="range" value="50" min="20" max="100" step="5" id="width">
+
+        <label for="height">Height</label>
+        <input type="range" value="50" min="5" max="100" step="5" id="height">
+
+        <button id="start">Start</button>
+    </form>
 </header>
 <main>
     <div id="grid">
